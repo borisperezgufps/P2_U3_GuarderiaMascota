@@ -10,6 +10,44 @@ package p2.guarderia.modelo;
  */
 public class GuarderiaFachada {
  
+    private IDAO idao;
     
+    public void agregarMascota(String id, String nombre, 
+            String edad, String raza) throws Exception{
+        
+        idao = new MascotaDAO();
+        
+        
+        MascotaDTO dto = new MascotaDTO(id, nombre);
+        
+        idao.agregar(dto);
+        
+    }
+    
+    public void asignarPropietarioMascota(String idMascota, 
+            String idPersona) throws Exception{
+        
+        idao = new MascotaDAO();
+        MascotaDTO dtoM = (MascotaDTO)idao.buscar(idMascota);
+        
+        idao = new PersonaDAO();
+        PersonaDTO dtoP = (PersonaDTO) idao.buscar(idPersona);
+        
+        dtoM.setDto(dtoP);
+        
+        // Actualizar!!
+        
+    }
+    
+    public void buscarMascota(String idMascota) throws Exception{
+        idao = new MascotaDAO();
+        MascotaDTO dtoM = (MascotaDTO)idao.buscar(idMascota);
+        
+        idao = new PersonaDAO();
+        PersonaDTO dtoP = (PersonaDTO) idao.buscar(dtoM.getDto().getId());
+        
+        dtoM.setDto(dtoP);
+        
+    }
     
 }
